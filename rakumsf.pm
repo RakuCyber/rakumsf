@@ -202,7 +202,10 @@ sub generate_payload_powershell {
 }
 sub update_script{
 system("sudo apt install libpar-packer-perl");
+system("rm -fr rakumsf.p*");
+system("sudo rm -fr /bin/rakumsf");
 system("wget https://raw.githubusercontent.com/RakuCyber/rakumsf/main/rakumsf.pm");
 system("rm -fr rakumsf");
 system("pp -o rakumsf rakumsf.pm");
+system("sudo mv rakumsf /bin/");
 }
